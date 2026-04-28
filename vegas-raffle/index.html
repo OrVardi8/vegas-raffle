@@ -22,13 +22,21 @@
     *,
     *::before,
     *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+    html {
+      scroll-behavior: smooth;
+      -webkit-text-size-adjust: 100%;
+      overflow-x: hidden;
+      max-width: 100vw;
+    }
     body {
       font-family: 'Heebo', system-ui, -apple-system, 'Segoe UI', sans-serif;
       background: #0a0014;
       color: #ffffff;
       line-height: 1.55;
       overflow-x: hidden;
+      max-width: 100vw;
+      width: 100%;
+      position: relative;
       -webkit-font-smoothing: antialiased;
       direction: rtl;
     }
@@ -748,7 +756,14 @@
       font-weight: 700;
       text-decoration: underline;
       cursor: pointer;
+      background: none;
+      border: none;
+      padding: 0;
+      font-family: inherit;
+      font-size: inherit;
+      display: inline;
     }
+    .checkbox-group .terms-link:hover { color: #ffeb8a; }
 
     .form-submit {
       width: 100%;
@@ -1209,7 +1224,7 @@
           <div class="checkbox-group">
             <input type="checkbox" id="agree-terms" required />
             <label for="agree-terms">
-              קראתי ואני מסכים ל<span class="terms-link" id="open-terms">תקנון ההגרלה</span>.
+              קראתי ואני מסכים ל<button type="button" class="terms-link" id="open-terms">תקנון ההגרלה</button>.
             </label>
           </div>
 
@@ -1366,7 +1381,10 @@
     /* ============== TERMS MODAL ============== */
     const modal = document.getElementById('terms-modal');
     function openTerms(e) {
-      if (e) e.preventDefault();
+      if (e) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
       modal.classList.add('show');
       document.body.style.overflow = 'hidden';
     }
@@ -1374,11 +1392,13 @@
       modal.classList.remove('show');
       document.body.style.overflow = '';
     }
-    document.getElementById('open-terms').addEventListener('click', openTerms);
-    document.getElementById('open-terms-footer').addEventListener('click', openTerms);
+    const openTermsBtn = document.getElementById('open-terms');
+    const openTermsFooter = document.getElementById('open-terms-footer');
+    if (openTermsBtn) openTermsBtn.addEventListener('click', openTerms);
+    if (openTermsFooter) openTermsFooter.addEventListener('click', openTerms);
     document.getElementById('close-terms').addEventListener('click', closeTerms);
     modal.addEventListener('click', (e) => { if (e.target === modal) closeTerms(); });
-    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeTerms(); });
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && modal.classList.contains('show')) closeTerms(); });
 
     /* ============== FORM SUBMIT ============== */
     // ‼️ בשלב הזה הטופס לא נשלח לשום מקום (placeholder).
