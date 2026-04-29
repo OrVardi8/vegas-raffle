@@ -58,7 +58,7 @@ exports.handler = async (event) => {
         תודה שנרשמת ל<strong style="color:#fff">הגרלת וגאס הגדולה</strong> של RealVardi.
       </p>
       <p style="font-size:17px; line-height:1.6; color:#d8c9f0; margin:0 0 24px;">
-        ההרשמה שלך נקלטה במערכת בהצלחה.
+        ההרשמה שלך נקלטה במערכת בהצלחה ✨
       </p>
 
       <div style="background:rgba(126,0,255,0.18); border:1px solid rgba(187,121,255,0.4); border-radius:12px; padding:20px; margin-bottom:28px;">
@@ -70,14 +70,14 @@ exports.handler = async (event) => {
 
       <h3 style="color:#bb79ff; margin:24px 0 12px; font-size:18px;">תזכורת חשובה ⚠️</h3>
       <p style="color:#d8c9f0; line-height:1.6; margin:0 0 12px;">
-        לפני הכרזת הזוכה, אנחנו מאמתים שכל המשתתפים ביצעו את 8 שלבי ההשתתפות. וודא שאתה:
+        לפני הכרזת הזוכה, אנחנו מאמתים שכל המשתתפים והמשתתפות ביצעו את 8 שלבי ההשתתפות. וודא/י ש:
       </p>
       <ul style="color:#d8c9f0; line-height:1.9; padding-right:20px; margin:0 0 24px;">
-        <li>עוקב אחרי <strong>@realvardi</strong> ו-<strong>@zackvsnq</strong> באינסטגרם</li>
+        <li>את/ה עוקב/ת אחרי <strong>@realvardi</strong> ו-<strong>@zackvsnq</strong> באינסטגרם</li>
         <li>שיתפת את הפוסט בסטורי + תייגת אותנו</li>
         <li>לחצת לייק ושמרת את הפוסט</li>
         <li>תייגת 3 חברים בתגובה לפוסט</li>
-        <li>חבר בקהילת RealVardi דרך <a href="https://whop.com/la-traders" style="color:#ffd84d; font-weight:700;">Whop</a></li>
+        <li>את/ה חבר/ה בקהילת RealVardi דרך <a href="https://whop.com/la-traders" style="color:#ffd84d; font-weight:700;">Whop</a></li>
         <li>גיל 21+ עם ESTA או ויזה תקפים</li>
       </ul>
 
@@ -103,7 +103,7 @@ exports.handler = async (event) => {
 מועד ההגרלה: 2 ביולי 2026
 הזוכה יוכרז בשידור לייב בדיסקורד של הקהילה.
 
-תזכורת — לפני הכרזת הזוכה אנחנו מאמתים שכל המשתתפים ביצעו את 8 שלבי ההשתתפות.
+תזכורת — לפני הכרזת הזוכה אנחנו מאמתים שכל המשתתפים והמשתתפות ביצעו את 8 שלבי ההשתתפות.
 
 בהצלחה,
 ורדי & צחי
