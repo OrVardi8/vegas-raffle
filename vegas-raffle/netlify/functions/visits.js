@@ -17,7 +17,20 @@ exports.handler = async (event) => {
   }
 
   try {
-    const store = getStore({ name: 'vegas-counter', consistency: 'strong' });
+    const siteID = process.env.NETLIFY_SITE_ID;
+    const token = process.env.NETLIFY_TOKEN;
+
+    if (!siteID || !token) {
+      throw new Error('Missing NETLIFY_SITE_ID or NETLIFY_TOKEN env var');
+    }
+
+    const store = getStore({
+      name: 'vegas-counter',
+      siteID,
+      token,
+      consistency: 'strong',
+    });
+
     const current = await store.get('visits');
     const count = (parseInt(current, 10) || 0) + 1;
     await store.set('visits', String(count));
