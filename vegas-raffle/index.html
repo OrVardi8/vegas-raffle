@@ -1218,7 +1218,7 @@
 
           <div class="form-group">
             <label for="discord"><span class="req">*</span>שם משתמש בדיסקורד</label>
-            <input type="text" id="discord" name="discord" required dir="ltr" placeholder="username" autocomplete="off" autocapitalize="off" autocorrect="off" />
+            <input type="text" id="discord" name="discord" required dir="ltr" autocomplete="off" autocapitalize="off" autocorrect="off" />
             <div class="discord-status" id="discord-status" aria-live="polite"></div>
           </div>
 
@@ -1230,7 +1230,60 @@
             </div>
             <div class="form-group">
               <label for="country"><span class="req">*</span>מדינת מגורים</label>
-              <input type="text" id="country" name="country" required placeholder="ישראל / ארה״ב / ..." />
+              <select id="country" name="country" required>
+                <option value="ישראל" selected>🇮🇱 ישראל</option>
+                <option value="ארה״ב">🇺🇸 ארה״ב</option>
+                <option value="קנדה">🇨🇦 קנדה</option>
+                <option value="בריטניה">🇬🇧 בריטניה</option>
+                <option value="צרפת">🇫🇷 צרפת</option>
+                <option value="גרמניה">🇩🇪 גרמניה</option>
+                <option value="איטליה">🇮🇹 איטליה</option>
+                <option value="ספרד">🇪🇸 ספרד</option>
+                <option value="הולנד">🇳🇱 הולנד</option>
+                <option value="בלגיה">🇧🇪 בלגיה</option>
+                <option value="שווייץ">🇨🇭 שווייץ</option>
+                <option value="אוסטריה">🇦🇹 אוסטריה</option>
+                <option value="שבדיה">🇸🇪 שבדיה</option>
+                <option value="נורבגיה">🇳🇴 נורבגיה</option>
+                <option value="דנמרק">🇩🇰 דנמרק</option>
+                <option value="פינלנד">🇫🇮 פינלנד</option>
+                <option value="אירלנד">🇮🇪 אירלנד</option>
+                <option value="פורטוגל">🇵🇹 פורטוגל</option>
+                <option value="יוון">🇬🇷 יוון</option>
+                <option value="קפריסין">🇨🇾 קפריסין</option>
+                <option value="צ'כיה">🇨🇿 צ'כיה</option>
+                <option value="פולין">🇵🇱 פולין</option>
+                <option value="הונגריה">🇭🇺 הונגריה</option>
+                <option value="רומניה">🇷🇴 רומניה</option>
+                <option value="בולגריה">🇧🇬 בולגריה</option>
+                <option value="רוסיה">🇷🇺 רוסיה</option>
+                <option value="אוקראינה">🇺🇦 אוקראינה</option>
+                <option value="טורקיה">🇹🇷 טורקיה</option>
+                <option value="איחוד הנסיכויות">🇦🇪 איחוד הנסיכויות</option>
+                <option value="ערב הסעודית">🇸🇦 ערב הסעודית</option>
+                <option value="מצרים">🇪🇬 מצרים</option>
+                <option value="מרוקו">🇲🇦 מרוקו</option>
+                <option value="דרום אפריקה">🇿🇦 דרום אפריקה</option>
+                <option value="אוסטרליה">🇦🇺 אוסטרליה</option>
+                <option value="ניו זילנד">🇳🇿 ניו זילנד</option>
+                <option value="הודו">🇮🇳 הודו</option>
+                <option value="סין">🇨🇳 סין</option>
+                <option value="יפן">🇯🇵 יפן</option>
+                <option value="דרום קוריאה">🇰🇷 דרום קוריאה</option>
+                <option value="סינגפור">🇸🇬 סינגפור</option>
+                <option value="מלזיה">🇲🇾 מלזיה</option>
+                <option value="תאילנד">🇹🇭 תאילנד</option>
+                <option value="אינדונזיה">🇮🇩 אינדונזיה</option>
+                <option value="פיליפינים">🇵🇭 פיליפינים</option>
+                <option value="וייטנאם">🇻🇳 וייטנאם</option>
+                <option value="ברזיל">🇧🇷 ברזיל</option>
+                <option value="ארגנטינה">🇦🇷 ארגנטינה</option>
+                <option value="מקסיקו">🇲🇽 מקסיקו</option>
+                <option value="צ'ילה">🇨🇱 צ'ילה</option>
+                <option value="קולומביה">🇨🇴 קולומביה</option>
+                <option value="פרו">🇵🇪 פרו</option>
+                <option value="other">🌍 אחר</option>
+              </select>
             </div>
           </div>
 
