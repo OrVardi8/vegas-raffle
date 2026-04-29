@@ -618,6 +618,21 @@
       background: rgba(255, 255, 255, 0.08);
       box-shadow: 0 0 0 3px rgba(187, 121, 255, 0.15);
     }
+    .form-group select,
+    .phone-row .phone-country {
+      color-scheme: dark; /* גורם לדפדפן להשתמש ברינדור כהה לדרופדאון */
+    }
+    .form-group select option {
+      background: #14081f !important;
+      color: #ffffff !important;
+      font-size: 16px;
+      font-weight: 500;
+      padding: 12px;
+    }
+    .form-group select option:disabled,
+    .form-group select option[value=""] {
+      color: #a99bc4 !important;
+    }
     .form-group input[dir="ltr"] { direction: ltr; text-align: left; }
     .form-row { display: grid; grid-template-columns: 1fr; gap: 0; }
 
