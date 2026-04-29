@@ -205,6 +205,44 @@
       animation: pulse-ring 2s infinite;
     }
 
+    /* === Visit counter === */
+    .visits-counter {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 7px 16px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.13);
+      border-radius: 100px;
+      font-size: 14px;
+      color: #d8c9f0;
+      margin: 0 auto 18px;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      max-width: max-content;
+      animation: fadeUp 0.6s ease-out 0.3s both;
+    }
+    .visits-counter.show { display: inline-flex; }
+    .visits-counter strong {
+      color: var(--gold);
+      font-weight: 800;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 18px;
+      letter-spacing: 0.04em;
+      direction: ltr;
+      display: inline-block;
+      margin: 0 4px;
+    }
+    .visits-icon {
+      font-size: 14px;
+      animation: pulse-emoji 2s ease-in-out infinite;
+    }
+    @keyframes pulse-emoji {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.15); }
+    }
+
     h1 {
       font-family: 'Heebo', sans-serif;
       font-weight: 900;
@@ -988,6 +1026,11 @@
         הגרלה אחת · זוכה אחד · 02.07.2026
       </div>
 
+      <div class="visits-counter" id="visits-counter" aria-live="polite">
+        <span class="visits-icon">🔥</span>
+        <span class="visits-text">כבר נכנסו לאתר: <strong id="visits-count">…</strong></span>
+      </div>
+
       <h1>
         טיסה ל<span class="accent">לאס וגאס.</span><br>
         מסחר לייב.<br>
@@ -1461,6 +1504,26 @@
   </div>
 
   <script>
+    /* ============== VISITS COUNTER ============== */
+    (async function fetchVisits() {
+      try {
+        const res = await fetch('/.netlify/functions/visits', { method: 'POST' });
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        const data = await res.json();
+        if (typeof data.count === 'number' && data.count > 0) {
+          const el = document.getElementById('visits-count');
+          const wrap = document.getElementById('visits-counter');
+          if (el && wrap) {
+            el.textContent = data.count.toLocaleString('he-IL');
+            wrap.classList.add('show');
+          }
+        }
+      } catch (err) {
+        console.error('Visits fetch failed:', err);
+        // אם הפונקציה נכשלת — הקאונטר נשאר מוסתר ולא מפריע
+      }
+    })();
+
     /* ============== COUNTDOWN ============== */
     // יעד: 1 ביולי 2026, 23:59:59 שעון ישראל (סגירת הרשמה — ההגרלה ב-2.7)
     const target = new Date('2026-07-01T23:59:59+03:00').getTime();
