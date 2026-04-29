@@ -91,17 +91,60 @@ exports.handler = async (event) => {
       return candidates.includes(username);
     });
 
+    // ===== בדיקה אם המשתמש כבר רשום בנטליפיי פורמס =====
+    let alreadyRegistered = false;
+    const netlifyToken = process.env.NETLIFY_TOKEN;
+    const siteId = process.env.NETLIFY_SITE_ID;
+
+    if (netlifyToken && siteId) {
+      try {
+        // נדפדף עד 1000 הרשמות (10 דפים × 100)
+        for (let page = 1; page <= 10; page++) {
+          const subUrl = `https://api.netlify.com/api/v1/sites/${siteId}/submissions?per_page=100&page=${page}`;
+          const subRes = await fetch(subUrl, {
+            headers: { Authorization: `Bearer ${netlifyToken}` },
+          });
+          if (!subRes.ok) {
+            console.error('Netlify API error:', subRes.status);
+            break;
+          }
+          const submissions = await subRes.json();
+          if (!Array.isArray(submissions) || submissions.length === 0) break;
+
+          const match = submissions.some((sub) => {
+            const data = sub.data || {};
+            const subDiscord = String(data.discord || '')
+              .trim()
+              .toLowerCase()
+              .replace(/^@/, '')
+              .replace(/^(.+?)#\d{2,5}$/, '$1')
+              .replace(/\s+/g, '');
+            return subDiscord && subDiscord === username;
+          });
+          if (match) {
+            alreadyRegistered = true;
+            break;
+          }
+          if (submissions.length < 100) break; // אין עוד דפים
+        }
+      } catch (err) {
+        console.error('Failed checking duplicates:', err.message);
+      }
+    } else {
+      console.warn('NETLIFY_TOKEN or NETLIFY_SITE_ID missing — skipping duplicate check');
+    }
+
     return {
       statusCode: 200,
       headers,
-      body: JSON.stringify({ exists: found, query: username }),
+      body: JSON.stringify({ exists: found, alreadyRegistered, query: username }),
     };
   } catch (err) {
     console.error('Function exception:', err);
     return {
       statusCode: 500,
       headers,
-      body: JSON.stringify({ error: 'internal error', exists: false }),
+      body: JSON.stringify({ error: 'internal error', exists: false, alreadyRegistered: false }),
     };
   }
 };
