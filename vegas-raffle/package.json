@@ -1,0 +1,9 @@
+{
+  "name": "vegas-raffle",
+  "version": "1.0.0",
+  "private": true,
+  "description": "RealVardi Vegas Giveaway 2026 - Landing page",
+  "dependencies": {
+    "@netlify/blobs": "^8.1.0"
+  }
+}
