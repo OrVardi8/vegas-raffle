@@ -395,6 +395,29 @@
         radial-gradient(circle at 50% 0%, rgba(126, 0, 255, 0.25), transparent 50%),
         var(--black);
     }
+    .prize-dates {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      max-width: 480px;
+      margin: 0 auto 32px;
+      padding: 14px 24px;
+      background: linear-gradient(135deg, rgba(255, 216, 77, 0.18), rgba(255, 184, 0, 0.1));
+      border: 1px solid rgba(255, 216, 77, 0.4);
+      border-radius: 14px;
+      color: #fff;
+      font-size: 16px;
+      font-weight: 500;
+      text-align: center;
+    }
+    .prize-dates strong {
+      color: var(--gold);
+      font-weight: 800;
+      font-size: 17px;
+    }
+    .prize-dates-icon { font-size: 18px; }
+
     .prize-grid {
       display: grid;
       grid-template-columns: 1fr;
@@ -1068,6 +1091,11 @@
         <p class="section-sub">חבילה מלאה. הכל כלול. ללא אותיות קטנות.</p>
       </div>
 
+      <div class="prize-dates">
+        <span class="prize-dates-icon">📅</span>
+        <span class="prize-dates-text">תאריכי המסע: <strong>16–20 באוגוסט 2026</strong></span>
+      </div>
+
       <div class="prize-grid">
         <div class="prize-card">
           <div class="prize-icon">✈</div>
@@ -1458,7 +1486,8 @@
         <li>נסיעה ברכב על על מסלול מקצועי.</li>
         <li>סשן מסחר לייב משותף.</li>
       </ul>
-      <p><strong>הפרס אינו ניתן להמרה במזומן, לא ניתן להעברה לאדם אחר, ולא ניתן לפיצול לחלקים.</strong> תאריכי הטיסה והשהות בפועל ייקבעו בתיאום בין עורך ההגרלה לבין הזוכה, בכפוף לזמינות.</p>
+      <p><strong>תאריכי המסע:</strong> 16–20 באוגוסט 2026.</p>
+      <p><strong>הפרס אינו ניתן להמרה במזומן, לא ניתן להעברה לאדם אחר, ולא ניתן לפיצול לחלקים.</strong> שינוי תאריכים אפשרי רק בתיאום מראש עם עורך ההגרלה ובכפוף לזמינות הטיסות והמלון.</p>
       <p>פריטים שאינם נכללים בפרס: ביטוח רפואי ונסיעות, אגרות ויזה/ESTA, הוצאות אישיות, מתנות וקניות, הסעות פנים מלבד אלה שצוינו במפורש, וכל הוצאה שלא צוינה בתקנון.</p>
 
       <h3>6. הליך ההגרלה</h3>
