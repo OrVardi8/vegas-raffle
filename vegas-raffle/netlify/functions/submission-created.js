@@ -95,7 +95,7 @@ exports.handler = async (event) => {
         <li>שיתפת את הפוסט בסטורי + תייגת אותנו</li>
         <li>לחצת לייק ושמרת את הפוסט</li>
         <li>תייגת 3 חברים בתגובה לפוסט</li>
-        <li>את/ה חבר/ה בקהילת RealVardi דרך <a href="https://whop.com/la-traders" style="color:#ffd84d; font-weight:700;">Whop</a></li>
+        <li>את/ה חבר/ה בקהילת RealVardi דרך <a href="https://whop.com/la-traders/ce8d50e6-62b2-4f4d-9053-aeb8e0c20a6a/" style="color:#ffd84d; font-weight:700;">Whop</a></li>
         <li>גיל 21+ עם ESTA או ויזה תקפים</li>
       </ul>
 
