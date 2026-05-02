@@ -870,6 +870,24 @@
       display: inline;
     }
     .checkbox-group .terms-link:hover { color: #ffeb8a; }
+    .checkbox-group input[type="checkbox"]:disabled {
+      cursor: not-allowed;
+      opacity: 0.4;
+    }
+    .checkbox-group input[type="checkbox"]:disabled + label {
+      opacity: 0.7;
+    }
+    .terms-hint {
+      display: block;
+      margin-top: 8px;
+      font-size: 12px;
+      color: rgba(255, 216, 77, 0.85);
+      font-weight: 500;
+      line-height: 1.45;
+    }
+    .terms-hint.unlocked {
+      color: #86efac;
+    }
 
     .form-submit {
       width: 100%;
@@ -1487,10 +1505,11 @@
             </label>
           </div>
 
-          <div class="checkbox-group">
-            <input type="checkbox" id="agree-terms" name="agreeTerms" value="yes" required />
+          <div class="checkbox-group" id="agree-terms-group">
+            <input type="checkbox" id="agree-terms" name="agreeTerms" value="yes" required disabled />
             <label for="agree-terms">
               קראתי ואני מסכים/ה ל<button type="button" class="terms-link" id="open-terms">תקנון ההגרלה</button>.
+              <span class="terms-hint" id="terms-hint">⚠️ יש לפתוח את התקנון ולגלול עד הסוף לפני שתוכל/י לסמן.</span>
             </label>
           </div>
 
@@ -1649,9 +1668,9 @@
       <h4>7.2.4. 3 לילות לינה בלאס וגאס</h4>
       <p>מלון 4 כוכבים לפחות. חדר סטנדרטי לאדם אחד. ארוחת בוקר ככל שכלולה במלון. בחירת המלון — בשיקול דעת עורך הפעילות. מיני-בר, room service וטיפים על חשבון הזוכה.</p>
       <h4>7.2.5. מענק כספי לבילויים</h4>
-      <p>סכום של 1,500 דולר אמריקאי סך הכל, לכל תקופת החופש. במזומן או בכרטיס מתנה. סכום שלא ינוצל יישאר בידי הזוכה.</p>
+      <p>סכום של 1,500 דולר אמריקאי סך הכל, לכל תקופת החופש. במזומן או בכרטיס מתנה. סכום שלא ינוצל לא יישאר בידי הזוכה.</p>
       <h4>7.2.6. חוויית נהיגה במסלול מקצועי</h4>
-      <p>מסלול נהיגה מקצועי באזור לאס וגאס. מינימום 30 דקות נהיגה בפועל. רכב ספורט שיועמד על ידי המסלול. הדרכת בטיחות כלולה. חתימה על מסמכי המסלול חובה.</p>
+      <p>מסלול נהיגה מקצועי באזור לאס וגאס. רכב ספורט שיועמד על ידי המסלול. הדרכת בטיחות כלולה. חתימה על מסמכי המסלול חובה. רישיון נהיגה הינו תנאי הכרחי למימוש חלק זה.</p>
       <h4>7.2.7. סשן מסחר לייב משותף</h4>
       <p>מינימום שעתיים. סשן מסחר משותף עם ורדי וצחי, כולל הסברים וניתוחים. הזוכה יביא איתו מחשב נייד עם חיבור לחשבון מסחר אישי, ככל שיבחר לסחור בעצמו. ההשתתפות אינה מהווה ייעוץ השקעות.</p>
       <p><strong>7.3. תאריכי החופשה:</strong> 16–20 באוגוסט 2026 (5 ימים, 4 לילות — 3 לילות בלאס וגאס + לילה אחד בלוס אנג'לס). תאריכים אלה קבועים ולא ניתנים לשינוי על ידי הזוכה.</p>
@@ -1873,6 +1892,25 @@
     /* ============== TERMS MODAL ============== */
     const modal = document.getElementById('terms-modal');
     let savedScrollY = 0;
+    let termsScrolledToEnd = false;
+    const termsCheckbox = document.getElementById('agree-terms');
+    const termsHint = document.getElementById('terms-hint');
+
+    function unlockTermsCheckbox() {
+      if (termsScrolledToEnd) return;
+      termsScrolledToEnd = true;
+      if (termsCheckbox) {
+        termsCheckbox.disabled = false;
+        // קריצה ויזואלית קצרה
+        termsCheckbox.style.transition = 'transform 0.3s';
+        termsCheckbox.style.transform = 'scale(1.2)';
+        setTimeout(() => { termsCheckbox.style.transform = ''; }, 300);
+      }
+      if (termsHint) {
+        termsHint.textContent = '✅ סיימת לקרוא — עכשיו אפשר לסמן הסכמה.';
+        termsHint.classList.add('unlocked');
+      }
+    }
 
     function openTerms(e) {
       if (e) {
@@ -1889,7 +1927,23 @@
       modal.classList.add('show');
       // מאפס גלילה פנימית של המודאל לראש
       const c = modal.querySelector('.modal-content');
-      if (c) c.scrollTop = 0;
+      if (c) {
+        c.scrollTop = 0;
+        // מקשיב לגלילה בתוך המודאל
+        const onScroll = () => {
+          // 30 פיקסל מ-bottom = "הגיע לסוף"
+          if (c.scrollTop + c.clientHeight >= c.scrollHeight - 30) {
+            unlockTermsCheckbox();
+          }
+        };
+        c.addEventListener('scroll', onScroll, { passive: true });
+        // אם המודאל קצר יותר מהמסך — אין מה לגלול, נפתח מיד
+        setTimeout(() => {
+          if (c.scrollHeight <= c.clientHeight + 30) {
+            unlockTermsCheckbox();
+          }
+        }, 100);
+      }
     }
     function closeTerms() {
       modal.classList.remove('show');
