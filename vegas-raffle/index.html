@@ -1052,6 +1052,26 @@
       border-radius: 12px;
       margin-top: 22px;
     }
+    .terms-accept-btn {
+      display: inline-block;
+      padding: 16px 42px;
+      background: linear-gradient(135deg, var(--gold), var(--gold-deep));
+      color: var(--black);
+      font-size: 17px;
+      font-weight: 900;
+      border-radius: 100px;
+      box-shadow: 0 10px 30px rgba(255, 184, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.4);
+      transition: transform 0.18s, box-shadow 0.18s;
+      cursor: pointer;
+      font-family: inherit;
+      border: none;
+      letter-spacing: 0.01em;
+    }
+    .terms-accept-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 14px 36px rgba(255, 184, 0, 0.6);
+    }
+    .terms-accept-btn:active { transform: translateY(0); }
 
     /* ================== FOOTER ================== */
     footer {
@@ -1509,7 +1529,7 @@
             <input type="checkbox" id="agree-terms" name="agreeTerms" value="yes" required disabled />
             <label for="agree-terms">
               קראתי ואני מסכים/ה ל<button type="button" class="terms-link" id="open-terms">תקנון ההגרלה</button>.
-              <span class="terms-hint" id="terms-hint">⚠️ יש לפתוח את התקנון ולגלול עד הסוף לפני שתוכל/י לסמן.</span>
+              <span class="terms-hint" id="terms-hint">⚠️ פתח/י את התקנון ולחצ/י על כפתור האישור בסופו.</span>
             </label>
           </div>
 
@@ -1832,6 +1852,15 @@
         עורך הפעילות: ורדי (RealVardi) · שותף: צחי (@zackvsnq)<br>
         תאריך פרסום התקנון: יום פרסום הקמפיין הרשמי
       </p>
+
+      <div style="text-align:center; margin-top:32px;">
+        <button type="button" class="terms-accept-btn" id="accept-terms-btn">
+          ✓ אני מאשר/ת את התקנון
+        </button>
+        <p style="margin-top:10px; color:#6b5d8a; font-size:12px;">
+          לחיצה על הכפתור תסמן אוטומטית את ההסכמה בטופס.
+        </p>
+      </div>
     </div>
   </div>
 
@@ -1892,24 +1921,22 @@
     /* ============== TERMS MODAL ============== */
     const modal = document.getElementById('terms-modal');
     let savedScrollY = 0;
-    let termsScrolledToEnd = false;
     const termsCheckbox = document.getElementById('agree-terms');
     const termsHint = document.getElementById('terms-hint');
 
-    function unlockTermsCheckbox() {
-      if (termsScrolledToEnd) return;
-      termsScrolledToEnd = true;
+    function acceptTerms() {
       if (termsCheckbox) {
         termsCheckbox.disabled = false;
-        // קריצה ויזואלית קצרה
+        termsCheckbox.checked = true;
         termsCheckbox.style.transition = 'transform 0.3s';
-        termsCheckbox.style.transform = 'scale(1.2)';
+        termsCheckbox.style.transform = 'scale(1.25)';
         setTimeout(() => { termsCheckbox.style.transform = ''; }, 300);
       }
       if (termsHint) {
-        termsHint.textContent = '✅ סיימת לקרוא — עכשיו אפשר לסמן הסכמה.';
+        termsHint.textContent = '✅ אישרת את התקנון.';
         termsHint.classList.add('unlocked');
       }
+      closeTerms();
     }
 
     function openTerms(e) {
@@ -1925,25 +1952,8 @@
       document.body.style.right = '0';
       document.body.style.width = '100%';
       modal.classList.add('show');
-      // מאפס גלילה פנימית של המודאל לראש
       const c = modal.querySelector('.modal-content');
-      if (c) {
-        c.scrollTop = 0;
-        // מקשיב לגלילה בתוך המודאל
-        const onScroll = () => {
-          // 30 פיקסל מ-bottom = "הגיע לסוף"
-          if (c.scrollTop + c.clientHeight >= c.scrollHeight - 30) {
-            unlockTermsCheckbox();
-          }
-        };
-        c.addEventListener('scroll', onScroll, { passive: true });
-        // אם המודאל קצר יותר מהמסך — אין מה לגלול, נפתח מיד
-        setTimeout(() => {
-          if (c.scrollHeight <= c.clientHeight + 30) {
-            unlockTermsCheckbox();
-          }
-        }, 100);
-      }
+      if (c) c.scrollTop = 0;
     }
     function closeTerms() {
       modal.classList.remove('show');
@@ -1952,7 +1962,6 @@
       document.body.style.left = '';
       document.body.style.right = '';
       document.body.style.width = '';
-      // משחזר גלילה למקום שהיה
       window.scrollTo(0, savedScrollY);
     }
     const openTermsBtn = document.getElementById('open-terms');
@@ -1960,6 +1969,7 @@
     if (openTermsBtn) openTermsBtn.addEventListener('click', openTerms);
     if (openTermsFooter) openTermsFooter.addEventListener('click', openTerms);
     document.getElementById('close-terms').addEventListener('click', closeTerms);
+    document.getElementById('accept-terms-btn').addEventListener('click', acceptTerms);
     modal.addEventListener('click', (e) => { if (e.target === modal) closeTerms(); });
     document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && modal.classList.contains('show')) closeTerms(); });
 
