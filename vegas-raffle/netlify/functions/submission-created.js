@@ -49,7 +49,7 @@ exports.handler = async (event) => {
       esta: 'ESTA תקף',
       visa: 'ויזה אמריקאית תקפה',
       passport: 'דרכון אמריקאי',
-      none: 'אין כרגע — ידאג לפני המסע',
+      none: 'אין כרגע — ידאג לפני החופש',
     }[usEntry] || usEntry;
 
     // ====== מייל 1: לנרשם ======
@@ -80,7 +80,7 @@ exports.handler = async (event) => {
       <div style="background:rgba(126,0,255,0.18); border:1px solid rgba(187,121,255,0.4); border-radius:12px; padding:20px; margin-bottom:28px;">
         <p style="margin:0 0 6px; color:#ffd84d; font-weight:800; font-size:15px;">📅 מועד ההגרלה</p>
         <p style="margin:0 0 14px; color:#fff; font-size:18px; font-weight:700;">2 ביולי 2026</p>
-        <p style="margin:0 0 6px; color:#ffd84d; font-weight:800; font-size:15px;">✈ תאריכי המסע</p>
+        <p style="margin:0 0 6px; color:#ffd84d; font-weight:800; font-size:15px;">✈ תאריכי החופש</p>
         <p style="margin:0 0 14px; color:#fff; font-size:18px; font-weight:700;">16–20 באוגוסט 2026</p>
         <p style="margin:0 0 6px; color:#ffd84d; font-weight:800; font-size:15px;">📣 הזוכה יוכרז</p>
         <p style="margin:0; color:#fff; font-size:16px;">בשידור לייב בדיסקורד של הקהילה</p>
@@ -119,7 +119,7 @@ exports.handler = async (event) => {
 ההרשמה שלך נקלטה במערכת בהצלחה.
 
 מועד ההגרלה: 2 ביולי 2026
-תאריכי המסע: 16–20 באוגוסט 2026
+תאריכי החופש: 16–20 באוגוסט 2026
 הזוכה יוכרז בשידור לייב בדיסקורד של הקהילה.
 
 תזכורת — לפני הכרזת הזוכה אנחנו מאמתים שכל המשתתפים והמשתתפות ביצעו את 8 שלבי ההשתתפות.
