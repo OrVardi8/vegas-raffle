@@ -21,12 +21,28 @@ exports.handler = async (event) => {
     const phoneFull = data.phoneFull || `${phoneCountry} ${phone}`.trim();
     const discord = data.discord || '';
     const dob = data.dob || '';
-    const calculatedAge = data.calculatedAge || '';
     const country = data.country || '';
     const usEntry = data.usEntry || '';
     const agreeRules = data.agreeRules || '';
     const agreeTerms = data.agreeTerms || '';
     const agreeMarketing = data.agreeMarketing || '';
+
+    // חישוב גיל בצד השרת (לוודאות, גם אם לא נשלח מהפרונטאנד)
+    let calculatedAge = data.calculatedAge || '';
+    if (dob) {
+      try {
+        const dobDate = new Date(dob);
+        if (!isNaN(dobDate)) {
+          const today = new Date();
+          let age = today.getFullYear() - dobDate.getFullYear();
+          const m = today.getMonth() - dobDate.getMonth();
+          if (m < 0 || (m === 0 && today.getDate() < dobDate.getDate())) age--;
+          calculatedAge = String(age);
+        }
+      } catch (e) {
+        console.warn('Failed to compute age:', e.message);
+      }
+    }
 
     const fullName = `${firstName} ${lastName}`.trim();
     const usEntryLabel = {
@@ -131,7 +147,7 @@ https://vegas.therealvardi.com`;
         ${row('טלפון', `<span style="direction:ltr; display:inline-block;">${escapeHtml(phoneFull)}</span>`)}
         ${row('דיסקורד', escapeHtml(discord))}
         ${row('תאריך לידה', escapeHtml(dob))}
-        ${row('גיל', escapeHtml(String(calculatedAge)))}
+        ${row('גיל מחושב', `<strong style="color:#7e00ff;">${escapeHtml(String(calculatedAge || '—'))}</strong>`)}
         ${row('מדינת מגורים', escapeHtml(country))}
         ${row('אישור כניסה לארה"ב', escapeHtml(usEntryLabel))}
       </table>
@@ -159,7 +175,7 @@ https://vegas.therealvardi.com`;
 טלפון: ${phoneFull}
 דיסקורד: ${discord}
 תאריך לידה: ${dob}
-גיל: ${calculatedAge}
+גיל מחושב: ${calculatedAge || '—'}
 מדינה: ${country}
 אישור כניסה: ${usEntryLabel}
 
