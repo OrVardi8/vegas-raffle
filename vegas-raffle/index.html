@@ -1921,10 +1921,12 @@
     /* ============== TERMS MODAL ============== */
     const modal = document.getElementById('terms-modal');
     let savedScrollY = 0;
+    let userAcceptedTermsViaButton = false; // flag: רק לחיצה על הכפתור "מאשר את התקנון" מאפשרת שליחה
     const termsCheckbox = document.getElementById('agree-terms');
     const termsHint = document.getElementById('terms-hint');
 
     function acceptTerms() {
+      userAcceptedTermsViaButton = true;
       if (termsCheckbox) {
         termsCheckbox.disabled = false;
         termsCheckbox.checked = true;
@@ -1937,6 +1939,19 @@
         termsHint.classList.add('unlocked');
       }
       closeTerms();
+    }
+
+    // אם המשתמש מבטל את הסימון ידנית — דרושה לחיצה חוזרת על "מאשר"
+    if (termsCheckbox) {
+      termsCheckbox.addEventListener('change', () => {
+        if (!termsCheckbox.checked) {
+          userAcceptedTermsViaButton = false;
+          if (termsHint) {
+            termsHint.textContent = '⚠️ פתח/י את התקנון ולחצ/י על כפתור האישור בסופו.';
+            termsHint.classList.remove('unlocked');
+          }
+        }
+      });
     }
 
     function openTerms(e) {
@@ -2119,6 +2134,23 @@
         showDobError(`מצטערים — ההשתתפות פתוחה לגילאי ${MIN_AGE}+ בלבד. הגיל שחושב: ${age}.`);
         dobInput.focus();
         dobInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        return;
+      }
+
+      // ולידציה של אישור תקנון — חובה ללחוץ על כפתור "מאשר את התקנון"
+      if (!userAcceptedTermsViaButton || !termsCheckbox || !termsCheckbox.checked) {
+        const termsGroup = document.getElementById('agree-terms-group');
+        if (termsHint) {
+          termsHint.textContent = '⛔ חובה לאשר את התקנון. פתח/י את התקנון ולחצ/י על "אני מאשר/ת את התקנון" בסופו.';
+          termsHint.classList.remove('unlocked');
+          termsHint.style.color = '#ffb0b0';
+        }
+        if (termsGroup) {
+          termsGroup.style.transition = 'background 0.3s, border-color 0.3s';
+          termsGroup.style.background = 'rgba(255, 80, 80, 0.12)';
+          termsGroup.style.borderColor = 'rgba(255, 80, 80, 0.5)';
+          termsGroup.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
         return;
       }
 
